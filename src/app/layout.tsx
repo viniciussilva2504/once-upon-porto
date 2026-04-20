@@ -30,10 +30,25 @@ export const metadata: Metadata = {
     "Porto medieval tour",
     "Porto archaeologist guide",
   ],
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_APP_URL || "https://onceuponatimeinporto.com"
+  ),
   openGraph: {
     type: "website",
     locale: "en_US",
     siteName: "Once Upon a Time in Porto",
+    title: "Once Upon a Time in Porto | Guided Historical Tours",
+    description:
+      "Expert-led walking tours through Porto and Vila Nova de Gaia with archaeologist Fábio Soares.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Once Upon a Time in Porto",
+    description:
+      "Guided historical tours through Porto's medieval streets, Port wine cellars, and hidden stories.",
+  },
+  alternates: {
+    canonical: "/",
   },
 };
 

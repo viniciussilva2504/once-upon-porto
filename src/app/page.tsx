@@ -17,8 +17,37 @@ import { MOCK_TOURS, MOCK_REVIEWS } from "@/lib/mock-data";
 export default function Home() {
   const featuredTours = MOCK_TOURS.slice(0, 3);
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "TouristAttraction",
+    name: "Once Upon a Time in Porto",
+    description:
+      "Expert-led walking tours through Porto and Vila Nova de Gaia with archaeologist Fábio Soares.",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Porto",
+      addressCountry: "PT",
+    },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: 41.1496,
+      longitude: -8.6109,
+    },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.9",
+      reviewCount: "500",
+      bestRating: "5",
+    },
+    priceRange: "€30 - €50",
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* ===== HERO ===== */}
       <section className="relative overflow-hidden">
         <Image
