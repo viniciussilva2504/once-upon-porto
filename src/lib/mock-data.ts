@@ -95,7 +95,7 @@ export const MOCK_TOURS: Tour[] = [
     max_participants: 15,
     category: "nocturnal",
     zone: "porto",
-    image_url: "/images/tours/night-porto.jpg",
+    image_url: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Porto_nightscape_%288079816865%29.jpg/1280px-Porto_nightscape_%288079816865%29.jpg",
     gallery_urls: [],
     highlights: [
       "Porto's haunted spots and legendary tales",
@@ -122,7 +122,7 @@ export const MOCK_TOURS: Tour[] = [
     max_participants: 10,
     category: "gastronomic",
     zone: "porto",
-    image_url: "/images/tours/food-porto.jpg",
+    image_url: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Francesinha_%282%29.jpg/1280px-Francesinha_%282%29.jpg",
     gallery_urls: [],
     highlights: [
       "Bolhão Market — Porto's historic food hub",
@@ -149,7 +149,7 @@ export const MOCK_TOURS: Tour[] = [
     max_participants: 12,
     category: "literary",
     zone: "porto",
-    image_url: "/images/tours/literary-porto.jpg",
+    image_url: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Livraria_Lello_-_Porto_-_Portugal_%2818045390626%29.jpg/800px-Livraria_Lello_-_Porto_-_Portugal_%2818045390626%29.jpg",
     gallery_urls: [],
     highlights: [
       "Livraria Lello — one of the world's most beautiful bookshops",

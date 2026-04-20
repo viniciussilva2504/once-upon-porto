@@ -1,36 +1,147 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🏰 Once Upon a Time in Porto
+
+> Expert-led walking tours through Porto's medieval streets, Port wine cellars, and hidden stories — guided by archaeologist Fábio Soares.
+
+[![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)](https://typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
+[![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL-3ECF8E?logo=supabase&logoColor=white)](https://supabase.com/)
+[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)](https://react.dev/)
+
+---
+
+## About
+
+**Once Upon a Time in Porto** is a modern web application for a guided walking tour business in Porto and Vila Nova de Gaia, Portugal. The platform allows visitors to browse tours, read reviews, and (soon) book experiences directly online.
+
+### Key Features
+
+- **Tour Catalog** — Browse 6 unique tours with category filtering (Historical, Wine, Azulejo, Nocturnal, Gastronomic, Literary)
+- **Tour Detail Pages** — Rich descriptions, highlights, meeting points, pricing, and guest reviews
+- **About the Guide** — Bio and credentials of archaeologist Fábio Soares
+- **Guest Reviews** — Testimonials with star ratings, linked to specific tours
+- **Contact** — Contact form with FAQ section
+- **Responsive Design** — Mobile-first with sticky navigation and hamburger menu
+- **SEO Optimized** — Full metadata, OpenGraph, semantic HTML
+
+### Planned Features
+
+- 🔐 Authentication (Supabase Auth)
+- 💳 Stripe payment & booking system
+- 📅 Calendar-based tour scheduling
+- ⭐ User review submissions
+- 🛡️ Admin dashboard for tour management
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| **Framework** | Next.js 16 (App Router, Server Components, SSG) |
+| **Language** | TypeScript 5 (strict mode) |
+| **Styling** | Tailwind CSS 4 with CSS custom properties |
+| **Database** | Supabase (PostgreSQL + Auth + RLS) |
+| **Icons** | Lucide React |
+| **Fonts** | Geist Sans & Geist Mono |
+| **Deploy** | Vercel |
+
+---
+
+## Project Structure
+
+```
+src/
+├── app/
+│   ├── layout.tsx          # Root layout (Header + Footer)
+│   ├── page.tsx            # Home (hero, tours, reviews, CTA)
+│   ├── about/page.tsx      # Guide bio & philosophy
+│   ├── contact/page.tsx    # Contact form & FAQ
+│   ├── reviews/page.tsx    # All guest reviews
+│   └── tours/
+│       ├── page.tsx        # Tour catalog with filters
+│       └── [slug]/page.tsx # Tour detail (SSG)
+├── components/
+│   ├── layout/             # Header, Footer
+│   ├── reviews/            # StarRating
+│   └── tours/              # TourCard
+├── lib/
+│   ├── mock-data.ts        # 6 tours + 5 reviews
+│   └── supabase/           # Browser & server clients
+└── types/
+    └── index.ts            # Tour, Booking, Review, UserProfile
+```
+
+---
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 18+
+- npm or yarn
+
+### Installation
+
+```bash
+git clone https://github.com/viniciussilva2504/once-upon-porto.git
+cd once-upon-porto
+npm install
+```
+
+### Environment Variables
+
+Copy the example file and fill in your credentials:
+
+```bash
+cp .env.local.example .env.local
+```
+
+Required variables:
+
+| Variable | Description |
+|----------|-------------|
+| `NEXT_PUBLIC_SUPABASE_URL` | Your Supabase project URL |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anonymous key |
+| `NEXT_PUBLIC_APP_URL` | App URL (default: `http://localhost:3000`) |
+
+### Development
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm start
+```
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## Architecture Decisions
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Server Components by default** — Pages are RSC for optimal performance; `"use client"` only where needed (Header mobile menu)
+- **Static Generation** — Tour detail pages use `generateStaticParams()` for fast SSG builds
+- **CSS Variables + Tailwind** — Theme colors defined as CSS custom properties in `globals.css`, consumed via `@theme inline` for Tailwind v4
+- **Mock-first development** — All data comes from `mock-data.ts` during development; Supabase clients are ready for production data
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## Author
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**Vinicius Silva** — Frontend Developer
+Background in Architecture · React · TypeScript · Porto, Portugal
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [Portfolio](https://portfolio-ebon-nine-95.vercel.app/)
+- [LinkedIn](https://www.linkedin.com/in/vjsilva2504/)
+- [GitHub](https://github.com/viniciussilva2504)
+
+---
+
+## License
+
+This project is proprietary. All rights reserved.
