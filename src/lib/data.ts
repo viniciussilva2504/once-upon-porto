@@ -1,6 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { MOCK_TOURS, MOCK_REVIEWS } from "@/lib/mock-data";
-import type { Tour, TourCategory } from "@/types";
+import type { Tour, TourCategory, BookingWithTour } from "@/types";
 
 // ========================
 // TOURS
@@ -152,6 +152,80 @@ export async function getAvailableSchedules(
 
     if (error) throw error;
     return (data as ScheduleSlot[]) ?? [];
+  } catch {
+    return [];
+  }
+}
+
+// ========================
+// BOOKINGS
+// ========================
+
+export async function getBookingByCode(
+  confirmationCode: string
+): Promise<BookingWithTour | null> {
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("bookings")
+      .select(
+        "id, tour_id, user_id, guest_name, guest_email, requested_date, num_participants, total_price, payment_status, confirmation_code, created_at, tours(title, slug, price_eur)"
+      )
+      .eq("confirmation_code", confirmationCode)
+      .single();
+
+    if (error || !data) return null;
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const row = data as any;
+    const tour = row.tours;
+    return {
+      id: row.id,
+      tour_id: row.tour_id,
+      schedule_id: null,
+      user_id: row.user_id,
+      guest_name: row.guest_name,
+      guest_email: row.guest_email,
+      requested_date: row.requested_date,
+      num_participants: row.num_participants,
+      total_price: row.total_price,
+      payment_status: row.payment_status,
+      stripe_session_id: null,
+      confirmation_code: row.confirmation_code,
+      created_at: row.created_at,
+      tour_title: tour?.title ?? null,
+      tour_slug: tour?.slug ?? null,
+      tour_price_eur: tour?.price_eur ? Number(tour.price_eur) : null,
+    } satisfies BookingWithTour;
+  } catch {
+    return null;
+  }
+}
+
+export async function getUserBookings(
+  userId: string
+): Promise<BookingWithTour[]> {
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("bookings")
+      .select(
+        "id, tour_id, user_id, guest_name, guest_email, requested_date, num_participants, total_price, payment_status, confirmation_code, created_at, tours(title, slug, price_eur)"
+      )
+      .eq("user_id", userId)
+      .order("created_at", { ascending: false });
+
+    if (error || !data) return [];
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return data.map((row: any) => ({
+      ...row,
+      schedule_id: null,
+      stripe_session_id: null,
+      tour_title: row.tours?.title ?? null,
+      tour_slug: row.tours?.slug ?? null,
+      tour_price_eur: row.tours?.price_eur ? Number(row.tours.price_eur) : null,
+    }));
   } catch {
     return [];
   }

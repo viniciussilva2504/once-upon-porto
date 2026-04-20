@@ -248,12 +248,12 @@ export default async function TourDetailPage({ params }: TourPageProps) {
                   </div>
                 </div>
 
-                <button
-                  type="button"
-                  className="w-full rounded-full bg-primary px-6 py-3.5 text-base font-semibold text-white hover:bg-primary-dark transition-colors"
+                <Link
+                  href={`/tours/${tour.slug}/book`}
+                  className="w-full inline-flex items-center justify-center rounded-full bg-primary px-6 py-3.5 text-base font-semibold text-white hover:bg-primary-dark transition-colors"
                 >
-                  Check Availability
-                </button>
+                  Book This Tour
+                </Link>
 
                 <p className="mt-3 text-center text-xs text-muted">
                   Free cancellation up to 24 hours before

@@ -42,14 +42,24 @@ export interface TourSchedule {
 
 export interface Booking {
   id: string;
-  schedule_id: string;
-  user_id: string;
+  tour_id: string | null;
+  schedule_id: string | null;
+  user_id: string | null;
+  guest_name: string;
+  guest_email: string;
+  requested_date: string | null;
   num_participants: number;
   total_price: number;
   stripe_session_id: string | null;
   payment_status: "pending" | "paid" | "refunded" | "failed";
   confirmation_code: string;
   created_at: string;
+}
+
+export interface BookingWithTour extends Booking {
+  tour_title: string | null;
+  tour_slug: string | null;
+  tour_price_eur: number | null;
 }
 
 export interface Review {
