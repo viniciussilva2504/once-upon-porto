@@ -7,6 +7,21 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 [![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL-3ECF8E?logo=supabase&logoColor=white)](https://supabase.com/)
 [![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)](https://react.dev/)
+[![Vercel](https://img.shields.io/badge/Deployed-Vercel-black?logo=vercel)](https://once-upon-porto.vercel.app/)
+
+**🌐 [once-upon-porto.vercel.app](https://once-upon-porto.vercel.app/)**
+
+---
+
+## Screenshots
+
+| Homepage | Tour Catalog |
+|----------|-------------|
+| ![Homepage](docs/screenshots/homepage.png) | ![Tours](docs/screenshots/tours.png) |
+
+| Tour Detail | Authentication |
+|------------|---------------|
+| ![Tour Detail](docs/screenshots/tour-detail.png) | ![Login](docs/screenshots/login.png) |
 
 ---
 
@@ -21,15 +36,16 @@
 - **About the Guide** — Bio and credentials of archaeologist Fábio Soares
 - **Guest Reviews** — Testimonials with star ratings, linked to specific tours
 - **Contact** — Contact form with FAQ section
+- **Authentication** — Sign up, sign in, and account management via Supabase Auth
+- **Route Protection** — `/account` pages protected via Next.js Proxy (middleware)
 - **Responsive Design** — Mobile-first with sticky navigation and hamburger menu
 - **SEO Optimized** — Full metadata, OpenGraph, semantic HTML
 
-### Planned Features
+### Roadmap
 
-- 🔐 Authentication (Supabase Auth)
 - 💳 Stripe payment & booking system
 - 📅 Calendar-based tour scheduling
-- ⭐ User review submissions
+- ⭐ Authenticated user review submissions
 - 🛡️ Admin dashboard for tour management
 
 ---
@@ -56,18 +72,26 @@ src/
 │   ├── layout.tsx          # Root layout (Header + Footer)
 │   ├── page.tsx            # Home (hero, tours, reviews, CTA)
 │   ├── about/page.tsx      # Guide bio & philosophy
+│   ├── account/page.tsx    # Protected user account page
 │   ├── contact/page.tsx    # Contact form & FAQ
+│   ├── login/page.tsx      # Sign in page
 │   ├── reviews/page.tsx    # All guest reviews
+│   ├── signup/page.tsx     # Create account page
+│   ├── actions/
+│   │   └── auth.ts         # Server Actions: login, signup, logout
 │   └── tours/
 │       ├── page.tsx        # Tour catalog with filters
 │       └── [slug]/page.tsx # Tour detail (SSG)
 ├── components/
-│   ├── layout/             # Header, Footer
+│   ├── layout/             # Header (server), HeaderClient (client), Footer
 │   ├── reviews/            # StarRating
 │   └── tours/              # TourCard
 ├── lib/
-│   ├── mock-data.ts        # 6 tours + 5 reviews
+│   ├── auth.ts             # getAuthUser() helper
+│   ├── data.ts             # Supabase data layer (with mock fallback)
+│   ├── mock-data.ts        # 6 tours + 5 reviews (dev fallback)
 │   └── supabase/           # Browser & server clients
+├── proxy.ts                # Route protection (Next.js Proxy / Middleware)
 └── types/
     └── index.ts            # Tour, Booking, Review, UserProfile
 ```
@@ -128,6 +152,8 @@ npm start
 - **Static Generation** — Tour detail pages use `generateStaticParams()` for fast SSG builds
 - **CSS Variables + Tailwind** — Theme colors defined as CSS custom properties in `globals.css`, consumed via `@theme inline` for Tailwind v4
 - **Mock-first development** — All data comes from `mock-data.ts` during development; Supabase clients are ready for production data
+- **Supabase Auth + SSR** — Auth state read server-side via `@supabase/ssr`; session passed from server Header to client HeaderClient to avoid layout hydration mismatches
+- **Route protection via Proxy** — Next.js 16 renamed Middleware to Proxy (`proxy.ts`); used to redirect unauthenticated users away from `/account`
 
 ---
 
