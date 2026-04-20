@@ -74,6 +74,24 @@ export async function signupAction(formData: FormData) {
     redirect(`/signup?error=${encodeURIComponent(error.message)}`);
   }
 
+  // Create user profile
+  if (data.user) {
+    const { error: profileError } = await supabase
+      .from("user_profiles")
+      .insert({
+        id: data.user.id,
+        full_name: fullName,
+        email: email,
+      });
+
+    if (profileError) {
+      console.error("Failed to create user profile:", profileError);
+      redirect(
+        `/signup?error=${encodeURIComponent("Account created, but profile setup failed. Please contact support.")}`
+      );
+    }
+  }
+
   revalidatePath("/", "layout");
 
   if (data.session) {
