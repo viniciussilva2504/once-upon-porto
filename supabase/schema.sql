@@ -144,6 +144,9 @@ create policy "Anyone can create a booking"
 
 -- Profiles: users see own profile
 alter table public.user_profiles enable row level security;
+create policy "Users can insert their own profile"
+  on public.user_profiles for insert
+  with check (auth.uid() = id);
 create policy "Users can view their own profile"
   on public.user_profiles for select
   using (auth.uid() = id);
