@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Star, ChevronRight, Quote } from "lucide-react";
 import { StarRating } from "@/components/reviews/StarRating";
-import { MOCK_REVIEWS, MOCK_TOURS } from "@/lib/mock-data";
+import { getTours, getApprovedReviews } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "Guest Reviews",
@@ -10,16 +10,19 @@ export const metadata: Metadata = {
     "Read what travelers say about Once Upon a Time in Porto walking tours. Real reviews from real guests who explored Porto with archaeologist Fábio Soares.",
 };
 
-export default function ReviewsPage() {
-  // Map tour titles by ID for display
+export default async function ReviewsPage() {
+  const [tours, reviews] = await Promise.all([
+    getTours(),
+    getApprovedReviews(),
+  ]);
+
   const tourMap = Object.fromEntries(
-    MOCK_TOURS.map((t) => [t.id, t.title])
+    tours.map((t) => [t.id, { title: t.title, slug: t.slug }])
   );
 
-  // Calculate stats
   const avgRating =
-    MOCK_REVIEWS.reduce((sum, r) => sum + r.rating, 0) / MOCK_REVIEWS.length;
-  const fiveStarCount = MOCK_REVIEWS.filter((r) => r.rating === 5).length;
+    reviews.reduce((sum, r) => sum + r.rating, 0) / (reviews.length || 1);
+  const fiveStarCount = reviews.filter((r) => r.rating === 5).length;
 
   return (
     <>
@@ -56,14 +59,17 @@ export default function ReviewsPage() {
             <div className="h-8 w-px bg-border hidden sm:block" />
             <div>
               <span className="text-3xl font-bold text-foreground">
-                {MOCK_REVIEWS.length}
+                {reviews.length}
               </span>
               <p className="mt-1 text-sm text-muted">Total Reviews</p>
             </div>
             <div className="h-8 w-px bg-border hidden sm:block" />
             <div>
               <span className="text-3xl font-bold text-foreground">
-                {Math.round((fiveStarCount / MOCK_REVIEWS.length) * 100)}%
+                {reviews.length > 0
+                  ? Math.round((fiveStarCount / reviews.length) * 100)
+                  : 0}
+                %
               </span>
               <p className="mt-1 text-sm text-muted">5-Star Reviews</p>
             </div>
@@ -75,7 +81,7 @@ export default function ReviewsPage() {
       <section className="py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {MOCK_REVIEWS.map((review) => (
+            {reviews.map((review) => (
               <div
                 key={review.id}
                 className="flex flex-col rounded-2xl bg-surface border border-border p-6 hover:shadow-lg transition-shadow"
@@ -87,18 +93,18 @@ export default function ReviewsPage() {
                 <div className="mt-4 pt-4 border-t border-border">
                   <StarRating rating={review.rating} size={14} />
                   <p className="mt-2 text-sm font-semibold text-foreground">
-                    {review.user.full_name}
+                    {review.guest_name}
                   </p>
                   <p className="text-xs text-muted">
-                    {review.user.country}
+                    {review.guest_country}
                     {tourMap[review.tour_id] && (
                       <>
                         {" · "}
                         <Link
-                          href={`/tours/${MOCK_TOURS.find((t) => t.id === review.tour_id)?.slug}`}
+                          href={`/tours/${tourMap[review.tour_id].slug}`}
                           className="text-primary hover:text-primary-dark transition-colors"
                         >
-                          {tourMap[review.tour_id]}
+                          {tourMap[review.tour_id].title}
                         </Link>
                       </>
                     )}

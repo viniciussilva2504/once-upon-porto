@@ -11,7 +11,7 @@ import {
   CheckCircle2,
 } from "lucide-react";
 import { StarRating } from "@/components/reviews/StarRating";
-import { MOCK_TOURS, MOCK_REVIEWS } from "@/lib/mock-data";
+import { getTourBySlug, getAllTourSlugs, getApprovedReviews } from "@/lib/data";
 import { CATEGORY_LABELS, ZONE_LABELS } from "@/types";
 
 interface TourPageProps {
@@ -22,7 +22,7 @@ export async function generateMetadata({
   params,
 }: TourPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const tour = MOCK_TOURS.find((t) => t.slug === slug);
+  const tour = await getTourBySlug(slug);
   if (!tour) return { title: "Tour Not Found" };
 
   return {
@@ -36,17 +36,18 @@ export async function generateMetadata({
   };
 }
 
-export function generateStaticParams() {
-  return MOCK_TOURS.map((tour) => ({ slug: tour.slug }));
+export async function generateStaticParams() {
+  const slugs = await getAllTourSlugs();
+  return slugs.map((slug) => ({ slug }));
 }
 
 export default async function TourDetailPage({ params }: TourPageProps) {
   const { slug } = await params;
-  const tour = MOCK_TOURS.find((t) => t.slug === slug);
+  const tour = await getTourBySlug(slug);
 
   if (!tour) notFound();
 
-  const tourReviews = MOCK_REVIEWS.filter((r) => r.tour_id === tour.id);
+  const tourReviews = await getApprovedReviews(tour.id);
   const avgRating =
     tourReviews.length > 0
       ? tourReviews.reduce((sum, r) => sum + r.rating, 0) / tourReviews.length
@@ -195,9 +196,9 @@ export default async function TourDetailPage({ params }: TourPageProps) {
                           &ldquo;{review.comment}&rdquo;
                         </p>
                         <p className="mt-2 text-xs font-semibold text-foreground">
-                          {review.user.full_name}{" "}
+                          {review.guest_name}{" "}
                           <span className="font-normal text-muted">
-                            — {review.user.country}
+                            — {review.guest_country}
                           </span>
                         </p>
                       </div>

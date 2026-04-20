@@ -12,10 +12,14 @@ import {
 } from "lucide-react";
 import { TourCard } from "@/components/tours/TourCard";
 import { StarRating } from "@/components/reviews/StarRating";
-import { MOCK_TOURS, MOCK_REVIEWS } from "@/lib/mock-data";
+import { getTours, getApprovedReviews } from "@/lib/data";
 
-export default function Home() {
-  const featuredTours = MOCK_TOURS.slice(0, 3);
+export default async function Home() {
+  const [allTours, allReviews] = await Promise.all([
+    getTours(),
+    getApprovedReviews(),
+  ]);
+  const featuredTours = allTours.slice(0, 3);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -244,7 +248,7 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {MOCK_REVIEWS.slice(0, 3).map((review) => (
+            {allReviews.slice(0, 3).map((review) => (
               <div
                 key={review.id}
                 className="flex flex-col rounded-2xl bg-surface border border-border p-6"
@@ -256,9 +260,9 @@ export default function Home() {
                 <div className="mt-4 pt-4 border-t border-border">
                   <StarRating rating={review.rating} size={14} />
                   <p className="mt-2 text-sm font-semibold text-foreground">
-                    {review.user.full_name}
+                    {review.guest_name}
                   </p>
-                  <p className="text-xs text-muted">{review.user.country}</p>
+                  <p className="text-xs text-muted">{review.guest_country}</p>
                 </div>
               </div>
             ))}

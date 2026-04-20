@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { TourCard } from "@/components/tours/TourCard";
-import { MOCK_TOURS } from "@/lib/mock-data";
+import { getTours } from "@/lib/data";
 import { CATEGORY_LABELS, type TourCategory } from "@/types";
 
 export const metadata: Metadata = {
@@ -23,14 +24,14 @@ async function ToursContent({
   searchParamsPromise: Promise<{ category?: string }>;
 }) {
   const { category } = await searchParamsPromise;
-  const activeTours = MOCK_TOURS.filter((t) => t.is_active);
+  const allTours = await getTours();
 
   const filteredTours = category
-    ? activeTours.filter((t) => t.category === category)
-    : activeTours;
+    ? allTours.filter((t) => t.category === category)
+    : allTours;
 
   const categories = [
-    ...new Set(activeTours.map((t) => t.category)),
+    ...new Set(allTours.map((t) => t.category)),
   ] as TourCategory[];
 
   return (
@@ -53,7 +54,7 @@ async function ToursContent({
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           {/* Category Filters */}
           <div className="flex flex-wrap gap-2 mb-10">
-            <a
+            <Link
               href="/tours"
               className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
                 !category
@@ -62,9 +63,9 @@ async function ToursContent({
               }`}
             >
               All Tours
-            </a>
+            </Link>
             {categories.map((cat) => (
-              <a
+              <Link
                 key={cat}
                 href={`/tours?category=${cat}`}
                 className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
@@ -74,7 +75,7 @@ async function ToursContent({
                 }`}
               >
                 {CATEGORY_LABELS[cat]}
-              </a>
+              </Link>
             ))}
           </div>
 
@@ -90,12 +91,12 @@ async function ToursContent({
               <p className="text-lg text-muted">
                 No tours found in this category.
               </p>
-              <a
+              <Link
                 href="/tours"
                 className="mt-4 inline-block text-sm font-semibold text-primary hover:text-primary-dark"
               >
                 View all tours
-              </a>
+              </Link>
             </div>
           )}
         </div>
