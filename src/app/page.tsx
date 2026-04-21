@@ -73,10 +73,10 @@ export default async function Home() {
               <span className="text-primary-light">in Porto</span>
             </h1>
             <p className="mt-6 text-lg sm:text-xl leading-relaxed text-white/70 max-w-xl">
-              Step into centuries of history with expert-led walking tours
-              through Porto&apos;s medieval streets, Port wine cellars, and
-              hidden stories — guided by archaeologist{" "}
-              <strong className="text-white">Fábio Soares</strong>.
+              Private historical tours and unique experiences in Porto and
+              Vila Nova de Gaia — guided by{" "}
+              <strong className="text-white">local archaeologists</strong>.
+              History, myths, wine &amp; hidden stories.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-4">
               <Link
@@ -90,7 +90,7 @@ export default async function Home() {
                 href="/about"
                 className="inline-flex items-center justify-center rounded-full border border-white/20 px-8 py-3.5 text-base font-semibold text-white hover:bg-white/10 transition-colors"
               >
-                Meet Your Guide
+                Meet the Archaeologists
               </Link>
             </div>
 
@@ -104,12 +104,10 @@ export default async function Home() {
               </div>
               <div className="h-4 w-px bg-white/20" />
               <span>
-                <strong className="text-white">500+</strong> happy guests
+                <strong className="text-white">10</strong> unique tours
               </span>
               <div className="h-4 w-px bg-white/20" />
-              <span>
-                <strong className="text-white">6</strong> unique tours
-              </span>
+              <span>Porto &amp; Vila Nova de Gaia</span>
             </div>
           </div>
         </div>
@@ -122,23 +120,23 @@ export default async function Home() {
             {[
               {
                 icon: GraduationCap,
-                title: "Expert Archaeologist",
-                desc: "Led by Fábio Soares — professional archaeologist and historian.",
+                title: "Local Archaeologists",
+                desc: "Every tour is guided by a professional archaeologist with deep knowledge of Porto and Gaia.",
               },
               {
                 icon: Users,
-                title: "Small Groups",
-                desc: "Intimate groups of 10-15 for a personal, immersive experience.",
+                title: "Private Tours",
+                desc: "All experiences are private — your group, your pace, your questions.",
               },
               {
                 icon: Clock,
-                title: "2-3 Hour Tours",
-                desc: "Deep dives, not surface overviews. Walk at a leisurely pace.",
+                title: "1.5h to Full Day",
+                desc: "From focused 90-minute tastings to full-day immersions in the Douro Valley.",
               },
               {
                 icon: Shield,
-                title: "Book with Confidence",
-                desc: "Free cancellation up to 24h. Secure online payments.",
+                title: "Pricing on Request",
+                desc: "We talk with you first. Contact us to discuss your group and preferred experience.",
               },
             ].map((item) => (
               <div key={item.title} className="flex gap-4">
@@ -203,22 +201,23 @@ export default async function Home() {
             {/* Bio */}
             <div>
               <span className="text-sm font-semibold uppercase tracking-wider text-primary">
-                Your Guide
+                Your Guides
               </span>
               <h2 className="mt-2 text-3xl sm:text-4xl font-bold text-foreground">
-                Fábio Soares
+                The Archaeologists Behind the Tours
               </h2>
               <p className="mt-2 text-lg font-medium text-accent">
-                Archaeologist & Historian
+                Archaeologists &amp; Historians
               </p>
               <p className="mt-6 text-muted leading-relaxed">
-                With a degree in Archaeology and a deep passion for Porto&apos;s
-                layered past, Fábio doesn&apos;t just show you the city — he
-                helps you understand it. Every street, every building, every tile
-                has a story, and Fábio knows how to tell it.
+                Our guides are local archaeologists and historians who have spent
+                years studying Porto, Vila Nova de Gaia, and the Douro Valley.
+                They don&apos;t just show you the city — they help you
+                understand it. Every street, every monument, every hidden corner
+                has a story, and they know how to tell it.
               </p>
               <p className="mt-4 text-muted leading-relaxed">
-                His tours go beyond guidebook facts. Expect original research,
+                Every tour goes beyond guidebook facts. Expect original research,
                 archaeological insights, and the kind of storytelling that makes
                 history feel alive — from Roman ruins beneath your feet to
                 medieval trade wars and the birth of the Port wine industry.
@@ -227,7 +226,7 @@ export default async function Home() {
                 href="/about"
                 className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary-dark transition-colors"
               >
-                Read full bio
+                Meet the team
                 <ChevronRight className="h-4 w-4" />
               </Link>
             </div>
