@@ -62,17 +62,11 @@ export function TourCard({ tour }: TourCardProps) {
           </span>
         </div>
 
-        {/* Price + CTA */}
-        <div className="mt-auto pt-4 flex items-end justify-between border-t border-border mt-5">
-          <div>
-            <span className="text-xs text-muted">From</span>
-            <p className="text-xl font-bold text-primary">
-              €{tour.price_eur}
-              <span className="text-xs font-normal text-muted">/person</span>
-            </p>
-          </div>
+        {/* CTA */}
+        <div className="mt-auto pt-4 flex items-center justify-between border-t border-border mt-5">
+          <span className="text-xs text-muted italic">Pricing on request</span>
           <span className="rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold text-primary group-hover:bg-primary group-hover:text-white transition-colors">
-            View Details
+            View Details →
           </span>
         </div>
       </div>

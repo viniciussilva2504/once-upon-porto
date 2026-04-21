@@ -211,13 +211,10 @@ export default async function TourDetailPage({ params }: TourPageProps) {
             {/* Sidebar — Booking Card */}
             <div className="lg:col-span-1">
               <div className="sticky top-24 rounded-2xl bg-surface border border-border p-6 shadow-sm">
-                <div className="mb-4">
-                  <span className="text-sm text-muted">From</span>
-                  <p className="text-3xl font-bold text-primary">
-                    €{tour.price_eur}
-                    <span className="text-sm font-normal text-muted">
-                      /person
-                    </span>
+                <div className="mb-4 p-4 rounded-xl bg-primary/5 border border-primary/20">
+                  <p className="text-sm font-semibold text-foreground">Private Tour — Pricing on Request</p>
+                  <p className="text-xs text-muted mt-1">
+                    We discuss your group size and preferences before confirming. Contact us and we'll get back to you within 24 hours.
                   </p>
                 </div>
 
@@ -249,14 +246,14 @@ export default async function TourDetailPage({ params }: TourPageProps) {
                 </div>
 
                 <Link
-                  href={`/tours/${tour.slug}/book`}
+                  href="/contact"
                   className="w-full inline-flex items-center justify-center rounded-full bg-primary px-6 py-3.5 text-base font-semibold text-white hover:bg-primary-dark transition-colors"
                 >
-                  Book This Tour
+                  Request a Booking
                 </Link>
 
                 <p className="mt-3 text-center text-xs text-muted">
-                  Free cancellation up to 24 hours before
+                  We respond within 24 hours
                 </p>
               </div>
             </div>
